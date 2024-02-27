@@ -1,0 +1,57 @@
+#features {
+    background: $gray-100;
+    padding: 80px 0;
+
+    .container {
+        display: grid;
+        justify-content: center;
+        text-align: center;
+
+        .tool-features {
+            margin-top: 20px;
+            display: grid;
+
+            @include lg {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            .box {
+                padding: 20px;
+                border: 1px solid $gray-300;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                
+                &:hover {
+                    transform: scale(1.01);
+                    background-color:white;
+                    border-radius: 5px;
+                    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+                }
+                @include lg {
+                    &:nth-child(1) {
+                        border-top: 0px solid $gray-300;
+                        border-left: 0px solid $gray-300;
+
+                    }
+                    &:nth-child(2) {
+                        border-top: 0px solid $gray-300;
+
+                    }
+                    &:nth-child(3) {
+                        border-top: 0px solid $gray-300;
+                        border-right: 0px solid $gray-300;
+
+                    }
+
+                    .icon.chat-icon {
+                        background-image: url('images/icons/chat.svg');
+                        width: 30px; 
+                        height: 30px; 
+                        background-size: cover; 
+                        margin: 0 auto 10px; 
+                    }
+                }
+            }
+            
+        }
+    }
+}

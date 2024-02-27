@@ -1,0 +1,32 @@
+// Work Management Section
+.work-container {
+  .work-flex-container {
+    display: flex;
+    align-items: center; 
+    gap: 160px; 
+    
+    .btn-theme-s {
+        width: auto; 
+        max-width: 200px;}
+    .work-image {
+      max-width: 50%;
+      height: auto;
+    }
+    
+    .work-content {
+      flex: 1; 
+    }
+  }
+
+  
+      .work-features-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 1rem 0;
+  
+        li {
+          margin: 0.5rem 0;
+        }
+      }
+  }
+  
