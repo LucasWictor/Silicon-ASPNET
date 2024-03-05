@@ -1,6 +1,6 @@
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddRouting(x => x.LowercaseUrls = true);
 var app = builder.Build();
 
 app.UseHsts();
