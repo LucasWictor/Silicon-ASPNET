@@ -52,9 +52,10 @@
         </main>
 
 
-        <footer>
+               <footer>
             <div class="container">
-                <div class="social-media">
+                <div class="social-media @(ViewContext.RouteData.Values["controller"]?.ToString() == "Auth" ? "d-none" : "social-media")">
+
                     <a class="btn-social" href="#"><i class="fa brands fa-facebook"></i></a>
                     <a class="btn-social" href="#"><i class="fa-brands fa-twitter"></i></a>
                     <a class="btn-social" href="#"><i class="fa brands fa-instagram"></i></a>
