@@ -54,7 +54,11 @@
 
         <footer>
             <div class="container">
+<<<<<<< Updated upstream
                 <div class="social-media">
+=======
+                <div class="social-media @(ViewContext.RouteData.Values["controller"]?.ToString() == "Auth" ? "d-none" : "social-media")">
+>>>>>>> Stashed changes
                     <a class="btn-social" href="#"><i class="fa brands fa-facebook"></i></a>
                     <a class="btn-social" href="#"><i class="fa-brands fa-x-twitter"></i></a>
                     <a class="btn-social" href="#"><i class="fa brands fa-instagram"></i></a>
