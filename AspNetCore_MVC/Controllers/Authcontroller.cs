@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCore_MVC.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCore_MVC.Controllers
 {
@@ -9,16 +10,27 @@ namespace AspNetCore_MVC.Controllers
             ViewData["Title"] = "Sign In";
             return View();
         }
+
         [Route("/signup")]
+        [HttpGet]
         public IActionResult SignUp()
         {
-            ViewData["Title"] = "Sign Up";
-            return View();
+            var viewModel = new SignUpViewModel();
+            return View(viewModel);
+        }
+
+        [Route("/signup")]
+        [HttpPost]
+        public IActionResult SignUp(SignUpViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+                return View(viewModel);
+
+            return RedirectToAction("SignIn", "Auth");
         }
 
         public IActionResult SignOut()
         {
-            // logic here
             return RedirectToAction("Index", "Home");
         }
     }
