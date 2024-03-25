@@ -971,9 +971,6 @@ footer .container p {
   color: red;
   margin-left: 10px;
 }
-#signup .container form .content .input-group span.field-validation-error {
-  color: #EF4444;
-}
 #signup .container form .content .checkbox-group {
   display: flex;
   align-items: center;
