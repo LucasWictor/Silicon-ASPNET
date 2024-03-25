@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetCore_MVC.Controllers
+namespace AspNetCore_MVC.Controllers;
+
+public class AccountController : Controller
 {
-    public class AccountController : Controller
-    {
-        public IActionResult Index()
-        {
-            ViewData["Title"] = "Profile";
-            return View();
-        }
-    }
+    //private readonly AccountService _accountService;
+
+    //public AccountController(AccountService accountService)
+    //{
+    //    _accountService = accountService;
+    //}
 }
