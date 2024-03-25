@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AspNetCore_MVC.helpers;
+using System.ComponentModel.DataAnnotations;
 
 namespace AspNetCore_MVC.Models
 {
@@ -30,8 +31,10 @@ namespace AspNetCore_MVC.Models
         public string ConfirmPassword { get; set; }
 
         [Display(Name = "I agree to the Terms & Conditions.", Order = 5)]
-        [Required(ErrorMessage = "You need to accept Terms & Conditions")]
+        [CheckboxRequired(ErrorMessage = "You need to accept Terms & Conditions")]
         public bool TermsAndConditions { get; set; } = false;
 
+
     }
+
 }
