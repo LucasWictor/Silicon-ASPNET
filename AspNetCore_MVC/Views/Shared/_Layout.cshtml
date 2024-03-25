@@ -36,10 +36,10 @@
 
 
                 <div class="account-buttons">
-                    <a class="btn-gray" asp-controller="Account" asp-action="SignIn">
+                    <a class="btn-gray" asp-controller="Auth" asp-action="SignIn">
                         <i class="fa-regular fa-right-to-bracket"></i><span>Sign In</span>
                     </a>
-                    <a class="btn-theme" asp-controller="Account" asp-action="SignUp">
+                    <a class="btn-theme" asp-controller="Auth" asp-action="SignUp">
                         <i class="fa-regular fa-user"></i><span>Sign Up</span>
                     </a>
                 </div>
@@ -52,9 +52,9 @@
         </main>
 
 
-        <footer>
+               <footer>
             <div class="container">
-                <div class="social-media @(ViewContext.RouteData.Values["controller"]?.ToString() == "auth" ? "d-none" : "social-media")">
+                <div class="social-media @(ViewContext.RouteData.Values["controller"]?.ToString() == "Auth" ? "d-none" : "social-media")">
                     <a class="btn-social" href="#"><i class="fa brands fa-facebook"></i></a>
                     <a class="btn-social" href="#"><i class="fa-brands fa-twitter"></i></a>
                     <a class="btn-social" href="#"><i class="fa brands fa-instagram"></i></a>
