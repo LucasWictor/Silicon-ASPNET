@@ -12,7 +12,7 @@ namespace AspNetCore_MVC.ViewModels
             LastName = "Wictor",
             Email = "Lucas@domain.com"
         };
-        public AccountDetailsAdressInfoModel AdressInfo { get; set; } = new AccountDetailsAdressInfoModel();
+        public AccountDetailsAdressInfoModel AddressInfo { get; set; } = new AccountDetailsAdressInfoModel();
 
     }
 }
