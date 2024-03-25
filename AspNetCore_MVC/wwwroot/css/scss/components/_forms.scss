@@ -2,6 +2,7 @@
     width: 100%;
     display: grid;
 
+
     .input-group {
         display: grid;
     }
@@ -31,9 +32,10 @@
             width: 1.2rem;
             border: 0.063rem solid red;
         }
+
         label {
-             margin: 0;
-             font-weight: 400;
+            margin: 0;
+            font-weight: 400;
         }
     }
 
@@ -51,9 +53,9 @@
             opacity: 0.4;
         }
 
-        &.input-validation-error{
-            border: 0.063rem solid $danger !important
-                color: $danger;
+        &.input-validation-error {
+            border: 0.063rem solid $danger !important;
+            color: $danger;
 
             &::placeholder {
                 color: $danger;
@@ -87,6 +89,7 @@
             top: 0;
             right: 0;
             @include text-s;
+            color: $danger;
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿#account-details {
+﻿@import "../components/forms";
+
+
+#account-details {
     display: grid;
     grid-template-columns: 2fr 5fr;
     gap: 150px;
