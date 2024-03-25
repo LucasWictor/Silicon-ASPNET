@@ -5,12 +5,8 @@ namespace AspNetCore_MVC.Controllers
 {
     public class AuthController : Controller
     {
-        public IActionResult SignIn()
-        {
-            ViewData["Title"] = "Sign In";
-            return View();
-        }
 
+        //sign up
         [Route("/signup")]
         [HttpGet]
         public IActionResult SignUp()
@@ -29,9 +25,34 @@ namespace AspNetCore_MVC.Controllers
             return RedirectToAction("SignIn", "Auth");
         }
 
+        //sign out
         public IActionResult SignOut()
         {
             return RedirectToAction("Index", "Home");
+        }
+
+        //sign in
+        [Route("/sigin")]
+        [HttpGet]
+        public IActionResult SignIn()
+        {
+            var viewModel = new SignInViewModel();
+            return View(viewModel);
+        }
+        [Route("/signin")]
+        [HttpPost]
+        public IActionResult SignIn(SignInViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+                return View(viewModel);
+          
+            //var result = _authService.SignIn(viewModel.Form);
+            //if (result)
+            //    return RedirectToAction("Account", "Index");
+
+            viewModel.ErrorMessage = "Incorrect email or password";
+            return View(viewModel);
+            
         }
     }
 }
