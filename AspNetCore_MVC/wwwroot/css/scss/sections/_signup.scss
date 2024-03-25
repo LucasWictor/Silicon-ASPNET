@@ -1,0 +1,87 @@
+﻿#signup {
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        border-radius: 5px;
+
+        form {
+            h1 {
+                color: #333;
+                margin-bottom: 20px;
+            }
+
+            p {
+                margin-bottom: 20px;
+
+                a {
+                    color: #0062cc;
+                    text-decoration: none;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+            .content {
+                .input-group {
+                    margin-bottom: 15px;
+
+                    label {
+                        display: block;
+                        margin-bottom: 5px;
+                    }
+
+                    input[type="text"],
+                    input[type="email"],
+                    input[type="password"] {
+                        width: 100%;
+                        padding: 10px;
+                        border: 1px solid #ccc;
+                        border-radius: 4px;
+                        box-sizing: border-box;
+                    }
+
+
+                    span {
+                        display: block;
+                        color: red;
+                        margin-left: 10px;
+
+                    }
+                }
+
+                .checkbox-group {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 15px;
+
+                    input[type="checkbox"] {
+                        margin-right: 10px;
+                    }
+
+                    label {
+                        flex-grow: 1;
+                    }
+                }
+
+                .btn-theme-s {
+                    display: block;
+                    width: 100%; 
+                    padding: 10px;
+                    background-color: #007bff;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    box-sizing: border-box;
+
+                    &:hover {
+                        background-color: #0056b3;
+                    }
+                }
+            }
+        }
+    }
+}

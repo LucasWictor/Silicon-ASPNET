@@ -929,3 +929,70 @@ footer .container p {
 #newsletter-section .agreement a {
   text-decoration: none;
 }
+
+#signup .container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+}
+#signup .container form h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+#signup .container form p {
+  margin-bottom: 20px;
+}
+#signup .container form p a {
+  color: #0062cc;
+  text-decoration: none;
+}
+#signup .container form p a:hover {
+  text-decoration: underline;
+}
+#signup .container form .content .input-group {
+  margin-bottom: 15px;
+}
+#signup .container form .content .input-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+#signup .container form .content .input-group input[type=text],
+#signup .container form .content .input-group input[type=email],
+#signup .container form .content .input-group input[type=password] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+#signup .container form .content .input-group span {
+  display: block;
+  color: red;
+  margin-left: 10px;
+}
+#signup .container form .content .checkbox-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+#signup .container form .content .checkbox-group input[type=checkbox] {
+  margin-right: 10px;
+}
+#signup .container form .content .checkbox-group label {
+  flex-grow: 1;
+}
+#signup .container form .content .btn-theme-s {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+#signup .container form .content .btn-theme-s:hover {
+  background-color: #0056b3;
+}
