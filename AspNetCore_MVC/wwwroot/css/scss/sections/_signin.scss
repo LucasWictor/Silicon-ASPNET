@@ -1,0 +1,100 @@
+﻿// SCSS Variables for colors
+$color-dark-text: #333; // Dark text color for titles and labels
+$color-light-text: #888; // Light text color for links
+$color-input-border: #ddd; // Light grey for input borders
+$color-input-background: #f7f7f7; // Very light grey, almost white for input backgrounds
+$color-background: #fff; // White for form background
+$color-primary: #5a5cc6; // Assuming a purplish blue similar to the button in the image
+$color-link: $color-primary; // Using the primary color for links as well
+
+// Styles specific to the sign-in section
+#signin {
+    .container {
+        max-width: 1000px;
+        margin: 50px auto;
+        background: $color-background;
+        padding: 20px 330px;
+    }
+
+    h1 {
+        color: $color-dark-text;
+        font-size: 24px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    p {
+        text-align: center;
+        margin-bottom: 30px;
+        color: $color-light-text;
+
+        a {
+            color: $color-link;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .input-group {
+        margin-bottom: 20px;
+
+        label {
+            display: block;
+            margin-bottom: .5em;
+            color: $color-dark-text;
+        }
+
+        input[type='email'],
+        input[type='password'] {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid $color-input-border;
+            background-color: $color-input-background;
+            border-radius: 7px;
+            font-size: 16px;
+
+            &:focus {
+                outline: none;
+                border-color: $color-primary;
+            }
+        }
+
+        span {
+            // Assuming this is for validation messages
+            display: block;
+            color: red;
+            margin-top: .25em;
+        }
+    }
+
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+
+        input[type='checkbox'] {
+            margin-right: 5px;
+        }
+
+        label {
+            margin: 0;
+            color: $color-dark-text;
+            font-size: 14px;
+        }
+    }
+
+    #form-forgot-password {
+        display: block;
+        text-align: center;
+        color: $color-primary;
+        margin-top: 15px;
+        font-size: 14px;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
