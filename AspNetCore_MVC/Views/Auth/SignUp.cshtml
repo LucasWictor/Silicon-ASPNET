@@ -37,11 +37,10 @@
                 </div>
                 <div id="form-terms" class="checkbox-group">
                     <input asp-for="Form.TermsAndConditions"/>
-                    <label asp-for="Form.TermsAndConditions">I agree to the <a asp-controller="About" asp-action="Terms">Terms</a></> & <a asp-controller="About" asp-action="Conditions" >Conditions</a></label>        
-                    <span asp-validation-for="Form.TermsAndConditions"></span>
+                    <label asp-for="Form.TermsAndConditions">I agree to the <a asp-controller="About" asp-action="Terms">Terms</a></> & <a asp-controller="About" asp-action="Conditions" >Conditions</a></label>
                 </div>
+                <span asp-validation-for="Form.TermsAndConditions"></span>
             </div>
-
             <button id="form-submit" class="btn-theme-s" type="submit">@Model.Title</buttonid>
         </form>
     </div>
