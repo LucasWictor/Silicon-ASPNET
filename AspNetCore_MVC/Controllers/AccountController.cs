@@ -17,7 +17,7 @@ public class AccountController : Controller
     {
         var viewModel = new AccountDetailsViewModel();
         //viewModel.BasicInfo =_accountService.GetBasicInfo();    
-        //viewModel.AdressInfo = _accountService.GetAdressInfo();
+        //viewModel.AddressInfo = _accountService.GetAddressInfo();
         return View(viewModel);
     }
 
@@ -31,7 +31,7 @@ public class AccountController : Controller
     [HttpPost]
     public IActionResult AddressInfo(AccountDetailsViewModel viewModel)
     {
-        //_accountSerivce:SaveAddressInfo(viewModel.AddressInfo);
+        //_accountService:SaveAddressInfo(viewModel.AddressInfo);
         return RedirectToAction(nameof(Details));
     }
 }
