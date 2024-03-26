@@ -23,8 +23,9 @@ namespace AspNetCore_MVC.Models
         [DataType(DataType.Password)]
         [Display(Name = "Password", Prompt = "Enter your password", Order = 3)]
         [Required(ErrorMessage = "Password is required")]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", ErrorMessage = "Invalid password")]
-        public string Password { get; set; }
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
+            ErrorMessage = "Invalid password")]
+        public string Password { get; set; } 
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm Password", Prompt = "Confirm your password", Order = 4)]

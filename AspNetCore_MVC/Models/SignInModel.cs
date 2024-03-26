@@ -12,7 +12,7 @@ public class SignInModel
     [DataType(DataType.Password)]
     [Display(Name = "Password", Prompt = "Enter your password", Order = 1)]
     [Required(ErrorMessage = "Password is required")]
-    public string Password { get; set; }
+    public string Password { get; set; } 
 
 
     [Display(Name = "Remember me",  Order = 2)]

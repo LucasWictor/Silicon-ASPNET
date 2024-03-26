@@ -10,7 +10,7 @@
             <p>Already have an account? <a asp-controller="Auth" asp-action="SignIn">Sign In here</a>.</p>
 
             <div class="content">
-                <div id="form-firstname"class="input-group">
+                <div id="form-firstname" class="input-group">
                     <label asp-for="Form.FirstName"></label>
                     <span asp-validation-for="Form.FirstName"></span>
                     <input asp-for="Form.FirstName"/>
@@ -37,11 +37,11 @@
                 </div>
                 <div id="form-terms" class="checkbox-group">
                     <input asp-for="Form.TermsAndConditions"/>
-                    <label asp-for="Form.TermsAndConditions">I agree to the <a asp-controller="About" asp-action="Terms">Terms</a></> & <a asp-controller="About" asp-action="Conditions" >Conditions</a></label>
+                <label asp-for="Form.TermsAndConditions">I agree to the <a asp-controller="About" asp-action="Terms">Terms</a> & <a asp-controller="About" asp-action="Conditions">Conditions</a></label>
                 </div>
                 <span asp-validation-for="Form.TermsAndConditions"></span>
             </div>
-            <button id="form-submit" class="btn-theme-s" type="submit">@Model.Title</buttonid>
+            <button id="form-submit" class="btn-theme-s" type="submit">@Model.Title</button>
         </form>
     </div>
 </section>
