@@ -1,83 +1,49 @@
-﻿const textValidator = (element, minLength = 2) => {
-    if (element.value.length >= minLength)
-        formErrorHandler(element, true)
+﻿document.addEventListener('DOMContentLoaded', function() {
+    let inputs = document.querySelectorAll('form [data-val="true"]');
 
-    formErrorHandler(element, false)
-};
+    inputs.forEach(input => {
+        input.addEventListener('input', function(e) {
+            if (e.target.type === 'email') {
+                validateEmail(e.target);
+            } else if (e.target.dataset.valEqualToOther) {
+                validateConfirmPassword(e.target);
+            } else {
+                validateText(e.target, e.target.dataset.valMinLength ? parseInt(e.target.dataset.valMinLength, 10) : 2);
+            }
+        });
+    });
 
-const compareValidator = (element, compareTo) => {
-    return element.value === compareTo;
-};
-
-
-const formErrorHandler = (element, validationResult) => {
-    let spanElement = document.querySelector(`[data-valmsg-for="${element.name}"]`);
-
-    if (validationResult) {
-        element.classList.remove('input-validation-error');
-        spanElement.classList.remove('field-validation-error');
-        spanElement.classList.add('field-validation-valid');
-        spanElement.innerHTML = '';
+    function validateText(input, minLength) {
+        const isValid = input.value.length >= minLength;
+        formErrorHandler(input, isValid, 'The input is too short.');
     }
-    else {
-        element.classList.add('input-validation-error');
-        spanElement.classList.add('field-validation-error');
-        spanElement.classList.remove('field-validation-valid');
-        spanElement.innerHTML = element.dataset.valRequired
+
+    function validateEmail(input) {
+        const regEx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        const isValid = regEx.test(input.value);
+        formErrorHandler(input, isValid, 'Please enter a valid email address.');
     }
-};
 
-const checkboxValidator = (element) => {
-    if (element.checked) {
-        formErrorHandler(element, true);
-    } else {
-        formErrorHandler(element, false);
+    function validateConfirmPassword(input) {
+        const originalPassword = document.querySelector(`[name="${input.dataset.valEqualToOther}"]`).value;
+        const isValid = input.value === originalPassword && input.value !== '';
+        formErrorHandler(input, isValid, 'Passwords do not match.');
     }
-};
 
-const emailValidator = (element) => {
-    const regEx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    formErrorHandler(element, regEx.test(element.value))
-}
-
-const passwordValidator = (element) => {
-    if (element.dataset.valEqualToOther !== undefined) {
-        const otherElementValue = document.getElementsByName(element.dataset.valEqualToOther.replace('*', '') + 'Form')[0].value;
-        formErrorHandler(element, compareValidator(element, otherElementValue));
-    } else {
-        const regEx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-        formErrorHandler(element, regEx.test(element.value)); 
-    }
-};
-
-let forms = document.querySelectorAll('form')
-let inputs = forms[0].querySelectorAll('input')
-
-inputs.forEach(input => {
-    if (input.dataset.val === 'true') {
-
-        if (input.type === 'checkbox') {
-            input.addEventListener('change', (e) => {
-                checkboxValidator(e.target)
-            })
+    function formErrorHandler(input, isValid, errorMessage) {
+        let feedbackElement = document.querySelector(`[data-valmsg-for="${input.name}"]`);
+        if (isValid) {
+            input.classList.remove('input-validation-error');
+            if (feedbackElement) {
+                feedbackElement.classList.remove('field-validation-error');
+                feedbackElement.textContent = '';
+            }
+        } else {
+            input.classList.add('input-validation-error');
+            if (feedbackElement) {
+                feedbackElement.classList.add('field-validation-error');
+                feedbackElement.textContent = errorMessage;
+            }
         }
-        else {
-            input.addEventListener('keyup', (e) => {
-                switch (e.target.type) {
-
-                    case 'text':
-                        textValidator(e.target)
-                        break;
-
-                    case 'email':
-                        emailValidator(e.target)
-                        break;
-
-                    case 'password':
-                        passwordValidator(e.target)
-                }
-            })
-        }
-
     }
-})
+});
