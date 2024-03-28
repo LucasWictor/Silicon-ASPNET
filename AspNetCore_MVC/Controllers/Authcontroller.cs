@@ -32,7 +32,7 @@ namespace AspNetCore_MVC.Controllers
         }
 
         //sign in
-        [Route("/sigin")]
+        [Route("/signin")]
         [HttpGet]
         public IActionResult SignIn()
         {
