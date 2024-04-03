@@ -1,28 +1,35 @@
 ﻿using AspNetCore_MVC.ViewModels;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
+using StatusCodes = Infrastructure.Models.StatusCodes;
 
 namespace AspNetCore_MVC.Controllers
 {
-    public class AuthController : Controller
+    public class AuthController(UserService userService) : Controller
     {
+        private readonly UserService _userService = userService;
 
         //sign up
-        [Route("/signup")]
+
         [HttpGet]
+        [Route("/signup")]
         public IActionResult SignUp()
         {
             var viewModel = new SignUpViewModel();
             return View(viewModel);
         }
 
-        [Route("/signup")]
         [HttpPost]
-        public IActionResult SignUp(SignUpViewModel viewModel)
+        [Route("/signup")]
+        public async Task<IActionResult> SignUp(SignUpViewModel viewModel)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.CreateUserAsync(viewModel.Form);
+                if (result.StatusCode == StatusCodes.Ok)
+                    return RedirectToAction("SignIn", "Auth");
+            }
                 return View(viewModel);
-
-            return RedirectToAction("SignIn", "Auth");
         }
 
         //sign out
@@ -32,15 +39,15 @@ namespace AspNetCore_MVC.Controllers
         }
 
         //sign in
-        [Route("/signin")]
         [HttpGet]
+        [Route("/signin")]
         public IActionResult SignIn()
         {
             var viewModel = new SignInViewModel();
             return View(viewModel);
         }
-        [Route("/signin")]
         [HttpPost]
+        [Route("/signin")]
         public IActionResult SignIn(SignInViewModel viewModel)
         {
             if (!ModelState.IsValid)
