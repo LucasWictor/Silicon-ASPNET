@@ -17,7 +17,7 @@ builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<AddressService>();
 builder.Services.AddScoped<UserService>();
 
-/
+
 builder.Logging.AddConsole(); // Adds console logging
 builder.Logging.AddDebug(); // Adds debug window logging
 
