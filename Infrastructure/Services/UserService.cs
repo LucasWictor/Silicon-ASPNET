@@ -14,20 +14,19 @@ public class UserService(UserRepository repository, AddressService addressServic
     {
         try
         {
-            var result = await _repository.AlreadyExistsAsync(x => x.Email == model.Email);
-            if (result.StatusCode != StatusCodes.Exists)
-            {
-                result = await _repository.CreateOneAsync(UserFactory.Create(model));
-                if (result.StatusCode != StatusCodes.Ok)
-                    return ResponseFactory.Ok("User was created successfully");
-                
-                return result;
-            }
+            var exists = await _repository.AlreadyExistsAsync(x => x.Email == model.Email);
+            if (exists.StatusCode != StatusCodes.Exists)
+                return exists;
+            
+            var result = await _repository.CreateOneAsync(UserFactory.Create(model));
 
-            return result;
+            if (result.StatusCode != StatusCodes.Ok)
+                return result;
+                    
+                    
+                    return ResponseFactory.Ok("User was created successfully");
+                    
         }
         catch (Exception ex) { return ResponseFactory.Error(ex.Message); }
-
-        return null;
     }
 }
