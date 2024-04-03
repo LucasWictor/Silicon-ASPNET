@@ -10,17 +10,19 @@ public class UserFactory
     {
         try
         {
-
-            var date = DateTime.Now;
+            // Must use UTC or shit breaks
+            var date = DateTime.UtcNow;
             
             return new UserEntity()
             {
-                Id =Guid.NewGuid().ToString(),
+                Id = Guid.NewGuid().ToString(),
                 Created = date,
                 Modified = date,
             };
         }
-        catch {}
+        catch
+        {
+        }
         return null!;
     }
     
@@ -28,7 +30,8 @@ public class UserFactory
     {
         try
         {
-            var date = DateTime.Now;
+            // Must use UTC or shit breaks
+            var date = DateTime.UtcNow;
             var (password, securityKey) = PasswordHasher.GenerateSecurePassword(model.Password);
             
             return new UserEntity
@@ -37,13 +40,15 @@ public class UserFactory
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
-                Password = model.Password,
+                Password = password, 
                 SecurityKey = securityKey,
                 Created = date,
                 Modified = date
             };
         }
-        catch {}
+        catch
+        {
+        }
         return null!;
     }
 }
