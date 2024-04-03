@@ -8,7 +8,7 @@ namespace Infrastructure.Contexts
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
-        
+      
         public DbSet<AddressEntity> Addresses { get; set; }
         public DbSet<UserEntity> Users { get; set; }
     }
