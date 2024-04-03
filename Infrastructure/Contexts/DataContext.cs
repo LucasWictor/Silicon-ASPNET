@@ -1,11 +1,15 @@
 using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Contexts;
-
-public class DataContext(DbContextOptions<DataContext> options) : DbContext(options)
+namespace Infrastructure.Contexts
 {
-    
-    public DbSet<AddressEntity> Addresses { get; set; }
-    public DbSet <UserEntity> Users { get; set; }
+    public class DataContext : DbContext
+    {
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+        }
+        
+        public DbSet<AddressEntity> Addresses { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
+    }
 }
