@@ -14,8 +14,13 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddScoped<AddressRepository>();
 builder.Services.AddScoped<UserRepository>();
+//builder.Services.AddScoped<FeatureRepository>();
+//builder.Services.AddScoped<FeatureItemRepository>();
+
+//builder.Services.AddScoped<FeatureService>();
 builder.Services.AddScoped<AddressService>();
 builder.Services.AddScoped<UserService>();
+
 
 
 builder.Logging.AddConsole(); // Adds console logging
