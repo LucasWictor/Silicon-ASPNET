@@ -1,7 +1,7 @@
 ﻿using AspNetCore_MVC.ViewModels;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging; // Make sure to include this for logging
+using Microsoft.Extensions.Logging; 
 using StatusCodes = Infrastructure.Models.StatusCodes;
 
 namespace AspNetCore_MVC.Controllers
@@ -73,14 +73,18 @@ namespace AspNetCore_MVC.Controllers
         [Route("/signin")]
         public async Task<IActionResult> SignIn(SignInViewModel viewModel)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var result = await _userService.SignInUserAsync(viewModel.Form);
                 if (result.StatusCode == Infrastructure.Models.StatusCodes.Ok)
-                return RedirectToAction("Details", "Account");
+                {
+                    return RedirectToAction("Details", "Account");
+                }
+                else
+                {
+                    viewModel.ErrorMessage = "Incorrect email or password";
+                }
             }
-
-            viewModel.ErrorMessage = "Incorrect email or password";
             return View(viewModel);
         }
     }
