@@ -11,5 +11,8 @@ namespace Infrastructure.Contexts
       
         public DbSet<AddressEntity> Addresses { get; set; }
         public DbSet<UserEntity> Users { get; set; }
+        
+        public DbSet<FeatureEntity> Features { get; set; }
+        public DbSet<FeatureItemEntity> FeaturesItems { get; set; }
     }
 }
