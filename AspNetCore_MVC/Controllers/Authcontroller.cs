@@ -71,24 +71,15 @@ namespace AspNetCore_MVC.Controllers
 
         [HttpPost]
         [Route("/signin")]
-        public IActionResult SignIn(SignInViewModel viewModel)
+        public async Task<IActionResult> SignIn(SignInViewModel viewModel)
         {
-            //_logger.LogInformation("Attempt to sign in with email: {Email}", viewModel.Form.Email);
             if (!ModelState.IsValid)
             {
-              //  _logger.LogWarning("SignIn attempt with invalid model state for email: {Email}", viewModel.Form.Email);
-                return View(viewModel);
+                var result = await _userService.SignInUserAsync(viewModel.Form);
+                if (result.StatusCode == Infrastructure.Models.StatusCodes.Ok)
+                return RedirectToAction("Details", "Account");
             }
-          
-            // Simulate sign-in logic here
-            // var result = _authService.SignIn(viewModel.Form);
-            // if (result)
-            // {
-            //     _logger.LogInformation("SignIn successful for email: {Email}", viewModel.Form.Email);
-            //     return RedirectToAction("Account", "Details");
-            // }
-            
-           // _logger.LogWarning("SignIn failed for email: {Email}. Incorrect email or password", viewModel.Form.Email);
+
             viewModel.ErrorMessage = "Incorrect email or password";
             return View(viewModel);
         }
