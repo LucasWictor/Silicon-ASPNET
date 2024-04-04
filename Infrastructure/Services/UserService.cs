@@ -23,30 +23,21 @@ namespace Infrastructure.Services
 
         public async Task<ResponseResult> CreateUserAsync(SignUpModel model)
         {
-            try
+            var existsResult = await _repository.AlreadyExistsAsync(x => x.Email == model.Email);
+            if (existsResult.StatusCode == StatusCodes.Exists)
             {
-                var existsResult = await _repository.AlreadyExistsAsync(x => x.Email == model.Email);
-                if (existsResult.StatusCode == StatusCodes.Exists)
-                {
-                   // _logger.LogInformation("User already exists: {Email}", model.Email);
-                    return ResponseFactory.Error("User already exists");
-                }
-                var createResult = await _repository.CreateOneAsync(UserFactory.Create(model));
-
-                if (createResult.StatusCode != StatusCodes.Ok)
-                {
-                   // _logger.LogWarning("Failed to create user: {Email}", model.Email);
-                    return createResult;
-                }
-
-               // _logger.LogInformation("User created successfully: {Email}", model.Email);
-                return ResponseFactory.Ok("User was created successfully");
+                return ResponseFactory.Error("User already exists");
             }
-            catch (Exception ex)
+
+            var userEntity = UserFactory.Create(model); 
+            var createResult = await _repository.CreateOneAsync(userEntity);
+
+            if (createResult.StatusCode != StatusCodes.Ok)
             {
-              //  _logger.LogError(ex, "Error creating user: {Email}", model.Email);
-                return ResponseFactory.Error(ex.Message);
+                return createResult;
             }
+
+            return ResponseFactory.Ok("User was created successfully");
         }
         
         public async Task<ResponseResult> SignInUserAsync(SignInModel model)
