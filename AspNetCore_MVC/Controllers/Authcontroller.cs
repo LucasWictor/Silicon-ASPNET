@@ -56,13 +56,12 @@ namespace AspNetCore_MVC.Controllers
             return View(viewModel);
         }
 
-        // Sign out
         public IActionResult SignOut()
         {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
         }
 
-        // Sign in
         [HttpGet]
         [Route("/signin")]
         public IActionResult SignIn()
@@ -72,53 +71,45 @@ namespace AspNetCore_MVC.Controllers
         }
 
         [HttpPost]
-[Route("/signin")]
-public async Task<IActionResult> SignIn(SignInViewModel viewModel)
-{
-    if (ModelState.IsValid)
-    {
-        var result = await _userService.SignInUserAsync(viewModel.Form);
-        if (result.StatusCode == StatusCodes.Ok)
+        [Route("/signin")]
+        public async Task<IActionResult> SignIn(SignInViewModel viewModel)
         {
-            // Fetch the user by email or adjust according to your application's logic
-            var user = await _context.Users
-                .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.Email == viewModel.Form.Email);
-            
-            if (user != null)
+            if (ModelState.IsValid)
             {
-                var claims = new List<Claim>
+                var result = await _userService.SignInUserAsync(viewModel.Form);
+                if (result.StatusCode == StatusCodes.Ok)
                 {
-                    new Claim(ClaimTypes.Name, viewModel.Form.Email),
-                    new Claim("Id", user.Id.ToString()), // Ensure this matches the claim type you are looking for in Details
-                    // Add other claims as needed
-                };
+                    var user = await _context.Users
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(u => u.Email == viewModel.Form.Email);
+            
+                    if (user != null)
+                    {
+                        var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Name, viewModel.Form.Email),
+                            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()), // Standardizing on ClaimTypes.NameIdentifier
+                            // Add other claims as needed
+                        };
 
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-                _logger.LogInformation($"User {viewModel.Form.Email} signed in successfully.");
-                var isAuthenticated = User.Identity.IsAuthenticated;
-                _logger.LogInformation($"User is authenticated: {isAuthenticated}");
-                
-                _logger.LogInformation("User authenticated successfully: {Email}", viewModel.Form.Email);
-
-                // Redirect to the Details action of AccountController
-                _logger.LogInformation("Redirecting to Account/Details");
-                return RedirectToAction("Details", "Account");
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                        _logger.LogInformation($"User {viewModel.Form.Email} signed in successfully.");
+                        
+                        return RedirectToAction("Details", "Account");
+                    }
+                    else
+                    {
+                        _logger.LogWarning("Failed to find user in database after successful sign-in.");
+                        viewModel.ErrorMessage = "Login failed. User not found.";
+                    }
+                }
+                else
+                {
+                    viewModel.ErrorMessage = "Incorrect email or password";
+                }
             }
-            else
-            {
-                _logger.LogWarning("Failed to find user in database after successful sign-in.");
-                // Handle the error appropriately, maybe set an error message or log it
-            }
+            return View(viewModel);
         }
-        else
-        {
-            viewModel.ErrorMessage = "Incorrect email or password";
-        }
-    }
-    return View(viewModel);
-}
     }
 }
