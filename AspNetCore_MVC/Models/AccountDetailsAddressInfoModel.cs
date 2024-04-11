@@ -2,14 +2,14 @@
 
 namespace AspNetCore_MVC.Models;
 
-public class AccountDetailsAdressInfoModel
+public class AccountDetailsAddressInfoModel
 {
     [Display(Name = "First name", Prompt = "Enter your first name", Order = 0)]
     [Required(ErrorMessage = "First name is required")]
-    public string Addressline_1 { get; set; } = null!;
+    public string Addressline1 { get; set; } = null!;
 
     [Display(Name = "Last name", Prompt = "Enter your last name", Order = 1)]
-    public string? Addressline_2 { get; set; }
+    public string? Addressline2 { get; set; }
 
     [Display(Name = "Postal code", Prompt = "Enter your postal code", Order = 2)]
     [Required(ErrorMessage = "Postal code is required")]

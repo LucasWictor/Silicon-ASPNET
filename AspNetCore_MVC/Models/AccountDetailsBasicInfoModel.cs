@@ -20,12 +20,11 @@ namespace AspNetCore_MVC.Models
         [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Invalid email address")]
         public string Email { get; set; } = null!;
 
-        [Display(Name = "Phone", Prompt = "Enter your phone number", Order = 3)] 
+        [Display(Name = "Phone (Optional) ", Prompt = "Enter your phone number", Order = 3)] 
         [DataType(DataType.PhoneNumber)]
-        [Required(ErrorMessage = "Phone number is required")]
-        public string Phone { get; set; } = null!;
+        public string? Phone { get; set; } 
 
-        [Display(Name = "Bio", Prompt = "Enter a short bio...", Order = 4)]
+        [Display(Name = "Bio (Optional)", Prompt = "Enter a short bio...", Order = 4)]
         [DataType(DataType.MultilineText)]
         public string? Biography { get; set; }
     }
