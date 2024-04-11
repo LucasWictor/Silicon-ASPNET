@@ -16,7 +16,7 @@ public class PasswordHasher
         Console.WriteLine($"Generated Security Key: {securityKey}");
 
         return (hash, securityKey);
-    }
+    } 
 
     public static bool ValidateSecurePassword(string password, string storedHash, string securityKey)
     {
