@@ -1,6 +1,5 @@
 ﻿@import "../components/forms";
 
-
 #account-details {
     display: grid;
     grid-template-columns: 2fr 5fr;
@@ -96,7 +95,7 @@
             }
         }
 
-        .adress-info {
+        .address-info {
             margin-top: 30px;
 
             form {
@@ -110,7 +109,7 @@
                     display: grid;
                     gap: 1rem 2rem;
                     grid-template-columns: 1fr 1fr;
-                    grid-template-areas: "addressline_1 addressline_1" "addressline_2 addressline_2" "postcalcode city" "buttons buttons";
+                    grid-template-areas: "addressline_1 addressline_1" "addressline_2 addressline_2" "postalcode city" "buttons buttons";
 
                     #form-addressline-1 {
                         grid-area: addressline_1;
@@ -137,10 +136,13 @@
                         grid-area: buttons;
                         margin: 20px 0;
                         display: flex;
+                        gap: 20px;
 
                     }
                 }
             }
         }
+        
+        }
     }
-}
+
