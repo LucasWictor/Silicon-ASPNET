@@ -27,7 +27,7 @@ public partial class UserEntity
     
     public int? AddressId { get; set; } 
     public AddressEntity? Address { get; set; }
-    public string? ProfileImage { get; set; }
+    public string? ProfileImage { get; set; } = "avatar.jpg";
 }
     
 
