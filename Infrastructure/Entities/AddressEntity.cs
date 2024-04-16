@@ -15,5 +15,7 @@ namespace Infrastructure.Entities
 
 
         public ICollection<UserEntity> Users { get; set; } = new List<UserEntity>();
+        public string Addressline1 { get; set; }
+        public string? Addressline2 { get; set; }
     }
 }
