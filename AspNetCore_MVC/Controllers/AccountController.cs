@@ -1,21 +1,21 @@
-﻿using AspNetCore_MVC.Models;
-using AspNetCore_MVC.ViewModels;
-using Infrastructure.Contexts;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Infrastructure.Entities;
 using Microsoft.Extensions.Logging;
+using Infrastructure.Contexts;
+using System;
+using System.Linq;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
+using AspNetCore_MVC.ViewModels;
+using AspNetCore_MVC.Models;
 
 namespace AspNetCore_MVC.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly DataContext _context;
         private readonly ILogger<AccountController> _logger;
+        private readonly DataContext _context;
 
         public AccountController(DataContext context, ILogger<AccountController> logger)
         {
@@ -24,63 +24,140 @@ namespace AspNetCore_MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details()
+        public IActionResult Details()
         {
-            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            if (userIdClaim != null)
-            {
-                var userId = userIdClaim.Value;
-                var userEntity = await _context.Users.Include(u => u.Address).FirstOrDefaultAsync(u => u.Id == userId);
-                if (userEntity == null) { return NotFound(); }
-
-                var viewModel = new AccountDetailsViewModel
-                {
-                    BasicInfo = new AccountDetailsBasicInfoModel
-                    {
-                        FirstName = userEntity.FirstName,
-                        LastName = userEntity.LastName,
-                        Email = userEntity.Email,
-                        Phone = userEntity.Phone,
-                        Biography = userEntity.Biography
-                    },
-                    AddressInfo = userEntity.Address != null ? new AccountDetailsAddressInfoModel
-                    {
-                        Addressline1 = userEntity.Address.StreetName,
-                        PostalCode = userEntity.Address.PostalCode,
-                        City = userEntity.Address.City
-                    } : new AccountDetailsAddressInfoModel()
-                };
-                return View(viewModel);
-            }
-            else { return RedirectToAction("SignIn", "Auth"); }
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> UpdateDetails(AccountDetailsViewModel model)
-        {
-            if (!ModelState.IsValid) { return View("Details", model); }
-
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId == null) { return RedirectToAction("SignIn", "Auth"); }
+            var userEntity = _context.Users
+                .Include(u => u.Address)
+                .FirstOrDefault(u => u.Id == userId);
 
-            var userEntity = await _context.Users.Include(u => u.Address).FirstOrDefaultAsync(u => u.Id == userId);
-            if (userEntity == null) { return NotFound(); }
+            if (userEntity == null)
+            {
+                _logger.LogError("User not found in the database.");
+                return NotFound(); 
+            }
 
-            // Updating user basic info
-            userEntity.FirstName = model.BasicInfo.FirstName;
-            userEntity.LastName = model.BasicInfo.LastName;
-            // Consider business logic for email updates
-            userEntity.Phone = model.BasicInfo.Phone;
-            userEntity.Biography = model.BasicInfo.Biography;
+            var viewModel = new AccountDetailsViewModel
+            {
+                BasicInfo = new AccountDetailsBasicInfoModel
+                {
+                    FirstName = userEntity.FirstName,
+                    LastName = userEntity.LastName,
+                    Email = userEntity.Email,
+                    Phone = userEntity.Phone,
+                    Biography = userEntity.Biography,
+                    ProfileImage = userEntity.ProfileImage
+                },
+                AddressInfo = new AccountDetailsAddressInfoModel
+                {
+                    Addressline1 = userEntity.Address?.Addressline1,
+                    Addressline2 = userEntity.Address?.Addressline2,
+                    PostalCode = userEntity.Address?.PostalCode,
+                    City = userEntity.Address?.City
+                }
+            };
 
-            // Updating address info
-            if (userEntity.Address == null) { userEntity.Address = new AddressEntity(); }
-            userEntity.Address.StreetName = model.AddressInfo.Addressline1;
-            userEntity.Address.PostalCode = model.AddressInfo.PostalCode;
-            userEntity.Address.City = model.AddressInfo.City;
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Details", "Account");
+            return View(viewModel);
         }
+
+   [HttpPost]
+public IActionResult UpdateBasicInfo(AccountDetailsBasicInfoModel basicInfo)
+{
+    if (!ModelState.IsValid)
+    {
+        // If the model state is not valid, return the view with validation errors
+        return View("Details", new AccountDetailsViewModel { BasicInfo = basicInfo });
+    }
+
+    try
+    {
+        // Get the current user's ID
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        // Retrieve the user entity from the database
+        var userEntity = _context.Users.FirstOrDefault(u => u.Id == userId);
+
+        if (userEntity == null)
+        {
+            // If user entity is not found, return NotFound
+            return NotFound(); 
+        }
+
+        // Update the basic information
+        userEntity.FirstName = basicInfo.FirstName;
+        userEntity.LastName = basicInfo.LastName;
+        userEntity.Email = basicInfo.Email;
+        userEntity.Phone = basicInfo.Phone;
+        userEntity.Biography = basicInfo.Biography;
+
+        // Save changes to the database
+        _context.SaveChanges();
+
+        // Redirect to the Details action to show updated information
+        return RedirectToAction("Details");
+    }
+    catch (Exception ex)
+    {
+        // Log any errors that occur during the update process
+        _logger.LogError($"Error updating basic information: {ex.Message}");
+        
+        // You can add a custom error message to ModelState if needed
+        ModelState.AddModelError("", "An error occurred while updating basic information.");
+        
+        // Return the view with the updated model to allow the user to correct any errors
+        return View("Details", new AccountDetailsViewModel { BasicInfo = basicInfo });
     }
 }
+
+[HttpPost]
+public IActionResult UpdateAddressInfo(AccountDetailsAddressInfoModel addressInfo)
+{
+    if (!ModelState.IsValid)
+    {
+        // If the model state is not valid, return the view with validation errors
+        return View("Details", new AccountDetailsViewModel { AddressInfo = addressInfo });
+    }
+
+    try
+    {
+        // Get the current user's ID
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        // Retrieve the user entity from the database
+        var userEntity = _context.Users
+            .Include(u => u.Address) // Include the address navigation property
+            .FirstOrDefault(u => u.Id == userId);
+
+        if (userEntity == null)
+        {
+            // If user entity is not found, return NotFound
+            return NotFound(); 
+        }
+
+        // Update the address information
+        userEntity.Address.Addressline1 = addressInfo.Addressline1;
+        userEntity.Address.Addressline2 = addressInfo.Addressline2;
+        userEntity.Address.PostalCode = addressInfo.PostalCode;
+        userEntity.Address.City = addressInfo.City;
+
+        // Save changes to the database
+        _context.SaveChanges();
+
+        // Redirect to the Details action to show updated information
+        return RedirectToAction("Details");
+    }
+    catch (Exception ex)
+    {
+        // Log any errors that occur during the update process
+        _logger.LogError($"Error updating address information: {ex.Message}");
+        
+        // You can add a custom error message to ModelState if needed
+        ModelState.AddModelError("", "An error occurred while updating address information.");
+        
+        // Return the view with the updated model to allow the user to correct any errors
+        return View("Details", new AccountDetailsViewModel { AddressInfo = addressInfo });
+    }
+    } 
+    }
+}
+
