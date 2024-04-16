@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
 html, body {
   line-height: 160%;
@@ -187,7 +187,6 @@ a {
   font-weight: 400;
   color: #565973;
   font-family: "Manrope", sans-serif;
-  color: #6366F1;
   text-decoration: none;
   transition: all 0.25s ease-in-out;
 }
@@ -810,7 +809,7 @@ footer .container p {
 #worktools .container .worktools-features .box {
   display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: flex-start;
   padding: 20px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -1244,39 +1243,42 @@ form span.field-validation-error::after {
   display: flex;
   gap: 20px;
 }
-#account-details .details .adress-info {
+#account-details .details .address-info {
   margin-top: 30px;
 }
-#account-details .details .adress-info form {
+#account-details .details .address-info form {
   padding: 1rem;
 }
-#account-details .details .adress-info form h5 {
+#account-details .details .address-info form h5 {
   color: #6366F1;
 }
-#account-details .details .adress-info form .content {
+#account-details .details .address-info form .content {
   display: grid;
   gap: 1rem 2rem;
   grid-template-columns: 1fr 1fr;
-  grid-template-areas: "addressline_1 addressline_1" "addressline_2 addressline_2" "postcalcode city" "buttons buttons";
+  grid-template-areas: "addressline_1 addressline_1" "addressline_2 addressline_2" "postalcode city" "buttons buttons";
 }
-#account-details .details .adress-info form .content #form-addressline-1 {
+#account-details .details .address-info form .content #form-addressline-1 {
   grid-area: addressline_1;
 }
-#account-details .details .adress-info form .content #form-addressline-2 {
+#account-details .details .address-info form .content #form-addressline-2 {
   grid-area: addressline_2;
 }
-#account-details .details .adress-info form .content #form-addressline-2 span {
+#account-details .details .address-info form .content #form-addressline-2 span {
   color: #B4B7C9;
   font-weight: 400;
 }
-#account-details .details .adress-info form .content #form-postalcode {
+#account-details .details .address-info form .content #form-postalcode {
   grid-area: postalcode;
 }
-#account-details .details .adress-info form .content #form-city {
+#account-details .details .address-info form .content #form-city {
   grid-area: city;
 }
-#account-details .details .adress-info form .content .form-buttons {
+#account-details .details .address-info form .content .form-buttons {
   grid-area: buttons;
   margin: 20px 0;
   display: flex;
+  gap: 20px;
 }
+
+/*# sourceMappingURL=site.css.map */
